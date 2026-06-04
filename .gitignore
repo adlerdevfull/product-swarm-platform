@@ -1,0 +1,52 @@
+/vendor/
+/var/cache/*
+/var/log/*
+!/var/cache/.gitkeep
+!/var/log/.gitkeep
+.env
+frontend/node_modules/
+frontend/dist/
+config/jwt/*.pem
+composer.lock
+.idea/
+.vscode/
+*.log
+
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+###> lexik/jwt-authentication-bundle ###
+/config/jwt/*.pem
+###< lexik/jwt-authentication-bundle ###
+
+###> phpunit/phpunit ###
+/.phpunit.cache/
+###< phpunit/phpunit ###
+
+
+# portfolio publish safeguards
+.env
+.env.*
+!.env.example
+/vendor/
+/node_modules/
+frontend/node_modules/
+**/node_modules/
+/var/
+/storage/logs/*
+!/storage/logs/.gitkeep
+/storage/framework/cache/data/*
+/bootstrap/cache/*.php
+config/jwt/*.pem
+*.log
+.phpunit.result.cache
+.phpunit.cache/
+coverage/
+.DS_Store

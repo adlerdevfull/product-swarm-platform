@@ -1,0 +1,69 @@
+{
+    "name": "desafio9/product-swarm-platform",
+    "description": "Digital product platform with Docker Swarm, Prometheus and Grafana",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "php": ">=8.2",
+        "symfony/framework-bundle": "^7.1",
+        "symfony/console": "^7.1",
+        "symfony/dotenv": "^7.1",
+        "symfony/flex": "^2",
+        "symfony/runtime": "^7.1",
+        "symfony/security-bundle": "^7.1",
+        "symfony/yaml": "^7.1",
+        "symfony/validator": "^7.1",
+        "symfony/serializer": "^7.1",
+        "symfony/property-access": "^7.1",
+        "doctrine/orm": "^3.2",
+        "doctrine/doctrine-bundle": "^2.12",
+        "doctrine/doctrine-migrations-bundle": "^3.3",
+        "lexik/jwt-authentication-bundle": "^3.1",
+        "php-amqplib/php-amqplib": "^3.7",
+        "predis/predis": "^2.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11",
+        "symfony/browser-kit": "7.1.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/",
+            "Domain\\": "src/Domain/",
+            "Application\\": "src/Application/",
+            "Infrastructure\\": "src/Infrastructure/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "auto-scripts": {
+            "cache:clear": "symfony-cmd",
+            "assets:install %PUBLIC_DIR%": "symfony-cmd"
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "platform": {
+            "php": "8.2.28"
+        },
+        "allow-plugins": {
+            "symfony/flex": true,
+            "symfony/runtime": true
+        }
+    },
+    "extra": {
+        "symfony": {
+            "allow-contrib": false,
+            "require": "7.1.*"
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
