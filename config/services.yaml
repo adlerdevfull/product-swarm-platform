@@ -1,0 +1,45 @@
+parameters:
+    default_instance: 'app'
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Domain\:
+        resource: '../src/Domain/'
+
+    Application\:
+        resource: '../src/Application/'
+
+    Infrastructure\:
+        resource: '../src/Infrastructure/'
+        exclude:
+            - '../src/Infrastructure/Persistence/Models/'
+
+    Infrastructure\Messaging\OrderEventPublisher:
+        arguments:
+            $amqpUrl: '%env(RABBITMQ_URL)%'
+
+    Infrastructure\Messaging\OrderWorkerCommand:
+        arguments:
+            $amqpUrl: '%env(RABBITMQ_URL)%'
+
+    Predis\Client:
+        arguments:
+            - '%env(REDIS_URL)%'
+        public: true
+
+    Predis\ClientInterface: '@Predis\Client'
+
+    Infrastructure\Metrics\PrometheusMetrics:
+        arguments:
+            $redis: '@Predis\Client'
+            $instance: '%env(default:default_instance:APP_INSTANCE)%'
+
+    Domain\Product\Repositories\ProductRepositoryInterface:
+        alias: Infrastructure\Persistence\Repositories\DoctrineProductRepository
+
+    Domain\Order\Repositories\OrderRepositoryInterface:
+        alias: Infrastructure\Persistence\Repositories\DoctrineOrderRepository
