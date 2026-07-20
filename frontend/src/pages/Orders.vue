@@ -1,12 +1,12 @@
 <template>
   <div>
     <div class="flex items-center justify-between mb-6">
-      <h2 class="text-2xl font-bold text-slate-900">Orders</h2>
+      <h2 class="text-2xl font-bold text-slate-900">{{ t('orders.title') }}</h2>
     </div>
 
     <form @submit.prevent="place" class="bg-white border rounded-xl p-5 mb-6 flex flex-wrap gap-3 items-end">
       <label class="text-sm">
-        <span class="text-slate-500">Product</span>
+        <span class="text-slate-500">{{ t('orders.product') }}</span>
         <select v-model.number="productId" class="block mt-1 border rounded-lg px-3 py-2 min-w-[220px]">
           <option v-for="p in published" :key="p.id" :value="p.id">
             {{ p.sku }} — {{ p.name }} (stock {{ p.stock }})
@@ -14,10 +14,10 @@
         </select>
       </label>
       <label class="text-sm">
-        <span class="text-slate-500">Qty</span>
+        <span class="text-slate-500">{{ t('orders.qty') }}</span>
         <input v-model.number="quantity" type="number" min="1" class="block mt-1 border rounded-lg px-3 py-2 w-24" />
       </label>
-      <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm">Place order</button>
+      <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm">{{ t('orders.place') }}</button>
       <p v-if="error" class="text-red-600 text-sm w-full">{{ error }}</p>
     </form>
 
@@ -25,12 +25,12 @@
       <table class="w-full text-sm">
         <thead class="bg-slate-50 text-left text-slate-500">
           <tr>
-            <th class="px-4 py-3">Number</th>
+            <th class="px-4 py-3">{{ t('orders.number') }}</th>
             <th class="px-4 py-3">SKU</th>
-            <th class="px-4 py-3">Qty</th>
-            <th class="px-4 py-3">Total</th>
-            <th class="px-4 py-3">Status</th>
-            <th class="px-4 py-3">Actions</th>
+            <th class="px-4 py-3">{{ t('orders.qty') }}</th>
+            <th class="px-4 py-3">{{ t('orders.total') }}</th>
+            <th class="px-4 py-3">{{ t('orders.status') }}</th>
+            <th class="px-4 py-3">{{ t('orders.actions') }}</th>
           </tr>
         </thead>
         <tbody>
@@ -62,6 +62,9 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import api from '../services/api'
+import { useI18n } from '../composables/useI18n'
+
+const { t } = useI18n()
 
 interface Product {
   id: number

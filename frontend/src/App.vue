@@ -3,8 +3,8 @@
   <div v-else class="flex h-screen bg-slate-50">
     <aside class="w-64 bg-slate-900 text-slate-100 flex flex-col shadow-xl">
       <div class="p-6 border-b border-slate-700">
-        <h1 class="text-lg font-bold tracking-tight">⚡ Product Swarm</h1>
-        <p class="text-xs text-slate-400 mt-1">Symfony · Docker Swarm · Observability</p>
+        <h1 class="text-lg font-bold tracking-tight">⚡ {{ t('appName') }}</h1>
+        <p class="text-xs text-slate-400 mt-1">{{ t('appTagline') }}</p>
       </div>
       <nav class="flex-1 p-4 space-y-1">
         <router-link
@@ -17,9 +17,10 @@
           <span>{{ item.icon }}</span>{{ item.label }}
         </router-link>
       </nav>
-      <div class="p-4 border-t border-slate-700">
+      <div class="p-4 border-t border-slate-700 space-y-3">
+        <LanguageSwitcher />
         <button @click="logout" class="w-full text-left text-sm text-slate-400 hover:text-red-400 transition">
-          Logout
+          {{ t('nav.logout') }}
         </button>
       </div>
     </aside>
@@ -30,18 +31,25 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuth } from './composables/useAuth'
+import { useI18n } from './composables/useI18n'
+import LanguageSwitcher from './components/LanguageSwitcher.vue'
 
 const router = useRouter()
 const { logout: doLogout } = useAuth()
+const { t, locale } = useI18n()
 
-const nav = [
-  { to: '/dashboard', icon: '📊', label: 'Dashboard' },
-  { to: '/products', icon: '📦', label: 'Products' },
-  { to: '/orders', icon: '🛒', label: 'Orders' },
-  { to: '/swarm', icon: '🐝', label: 'Swarm & Ops' },
-]
+const nav = computed(() => {
+  void locale.value
+  return [
+    { to: '/dashboard', icon: '📊', label: t('nav.dashboard') },
+    { to: '/products', icon: '📦', label: t('nav.products') },
+    { to: '/orders', icon: '🛒', label: t('nav.orders') },
+    { to: '/swarm', icon: '🐝', label: t('nav.swarm') },
+  ]
+})
 
 const logout = () => {
   doLogout()

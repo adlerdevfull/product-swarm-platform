@@ -1,15 +1,15 @@
 <template>
   <div class="space-y-6">
-    <h2 class="text-2xl font-bold text-slate-900">Swarm & Observability</h2>
+    <h2 class="text-2xl font-bold text-slate-900">{{ t('swarm.title') }}</h2>
 
     <div class="grid md:grid-cols-2 gap-4">
       <div class="bg-white border rounded-xl p-5">
-        <h3 class="font-semibold mb-2">Health probe</h3>
+        <h3 class="font-semibold mb-2">{{ t('swarm.health') }}</h3>
         <pre class="text-xs bg-slate-900 text-emerald-400 p-3 rounded-lg overflow-auto">{{ healthJson }}</pre>
-        <button @click="refreshHealth" class="mt-3 text-sm text-indigo-600 hover:underline">Refresh</button>
+        <button @click="refreshHealth" class="mt-3 text-sm text-indigo-600 hover:underline">{{ t('swarm.refresh') }}</button>
       </div>
       <div class="bg-white border rounded-xl p-5">
-        <h3 class="font-semibold mb-2">Links</h3>
+        <h3 class="font-semibold mb-2">{{ t('swarm.links') }}</h3>
         <ul class="text-sm space-y-2 text-slate-600">
           <li><a class="text-indigo-600 hover:underline" href="http://localhost:9090" target="_blank">Prometheus :9090</a></li>
           <li><a class="text-indigo-600 hover:underline" href="http://localhost:3000" target="_blank">Grafana :3000</a> (admin/admin)</li>
@@ -20,7 +20,7 @@
     </div>
 
     <div class="bg-white border rounded-xl p-5">
-      <h3 class="font-semibold mb-3">Swarm commands</h3>
+      <h3 class="font-semibold mb-3">{{ t('swarm.commands') }}</h3>
       <pre class="text-xs bg-slate-100 p-4 rounded-lg overflow-auto text-slate-800"># Init swarm (once)
 docker swarm init
 
@@ -44,6 +44,9 @@ docker service ps product_app</pre>
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import api from '../services/api'
+import { useI18n } from '../composables/useI18n'
+
+const { t } = useI18n()
 
 const healthJson = ref('Loading…')
 

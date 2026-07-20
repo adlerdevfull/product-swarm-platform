@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="flex items-center justify-between mb-6">
-      <h2 class="text-2xl font-bold text-slate-900">Products</h2>
+      <h2 class="text-2xl font-bold text-slate-900">{{ t('products.title') }}</h2>
       <button @click="showForm = !showForm" class="bg-indigo-600 text-white text-sm px-4 py-2 rounded-lg">
-        {{ showForm ? 'Cancel' : '+ New product' }}
+        {{ showForm ? t('products.cancel') : t('products.new') }}
       </button>
     </div>
 
@@ -20,11 +20,11 @@
       <table class="w-full text-sm">
         <thead class="bg-slate-50 text-left text-slate-500">
           <tr>
-            <th class="px-4 py-3">SKU</th>
-            <th class="px-4 py-3">Name</th>
-            <th class="px-4 py-3">Price</th>
-            <th class="px-4 py-3">Stock</th>
-            <th class="px-4 py-3">Status</th>
+            <th class="px-4 py-3">{{ t('products.sku') }}</th>
+            <th class="px-4 py-3">{{ t('products.name') }}</th>
+            <th class="px-4 py-3">{{ t('products.price') }}</th>
+            <th class="px-4 py-3">{{ t('products.stock') }}</th>
+            <th class="px-4 py-3">{{ t('products.status') }}</th>
             <th class="px-4 py-3"></th>
           </tr>
         </thead>
@@ -43,7 +43,7 @@
                 @click="publish(p.id)"
                 class="text-indigo-600 hover:underline text-xs"
               >
-                Publish
+                {{ t('products.publish') }}
               </button>
             </td>
           </tr>
@@ -56,6 +56,9 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
 import api from '../services/api'
+import { useI18n } from '../composables/useI18n'
+
+const { t } = useI18n()
 
 interface Product {
   id: number
