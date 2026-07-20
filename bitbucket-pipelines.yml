@@ -1,0 +1,31 @@
+# CI pipeline style matching the job posting (Bitbucket Pipelines)
+image: php:8.2-cli
+
+definitions:
+  steps:
+    - step: &unit-tests
+        name: Unit tests
+        caches:
+          - composer
+        script:
+          - apt-get update && apt-get install -y git unzip libzip-dev
+          - docker-php-ext-install zip pdo pdo_mysql
+          - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+          - composer install --no-interaction --prefer-dist
+          - ./vendor/bin/phpunit --colors=always
+
+    - step: &build-image
+        name: Build Docker image
+        services:
+          - docker
+        script:
+          - docker build -t product-platform:$BITBUCKET_COMMIT -f docker/Dockerfile --target production .
+          - echo "Image built product-platform:$BITBUCKET_COMMIT"
+
+pipelines:
+  default:
+    - step: *unit-tests
+  branches:
+    main:
+      - step: *unit-tests
+      - step: *build-image

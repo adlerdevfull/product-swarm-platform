@@ -1,0 +1,29 @@
+groups:
+  - name: product-platform
+    rules:
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{route=~".*"}[5m]) == 0
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "No HTTP traffic in 10 minutes"
+          description: "Product platform may be down or not receiving traffic."
+
+      - alert: InstanceDown
+        expr: up{job="product-platform"} == 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Product platform target is down"
+          description: "Prometheus cannot scrape {{ $labels.instance }}."
+
+      - alert: HighMemory
+        expr: php_memory_bytes > 400000000
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High PHP memory usage"
+          description: "Instance {{ $labels.instance }} using more than 400MB."
